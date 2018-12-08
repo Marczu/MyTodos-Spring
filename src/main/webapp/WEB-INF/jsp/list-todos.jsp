@@ -25,6 +25,7 @@
             <th scope="col">Target Time</th>
             <th scope="col">Is it done?</th>
             <th scope="col">Delete</th>
+            <th scope="col">Update</th>
         </tr>
         </thead>
         <tbody>
@@ -34,6 +35,7 @@
                 <td>${todo.targetDate}</td>
                 <td>${todo.done}</td>
                 <td><a class="btn btn-warning btn-sm" href="delete-todo?id=${todo.id}" role="button">Delete</a></td>
+                <td><a class="btn btn-success btn-sm" href="update-todo?id=${todo.id}" role="button">Update</a></td>
             </tr>
         </c:forEach>
         </tbody>

@@ -5,10 +5,9 @@ import com.example.demojsp.service.TodoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 
@@ -38,7 +37,12 @@ public class TodoController {
     }
 
     @PostMapping("/add-todo")
-    public String addTodo(Todo todo, Model model) {
+    public String addTodo(@Validated Todo todo, BindingResult result, Model model) {
+
+        if(result.hasErrors()){
+            System.out.println("testing for errors");
+            return "todo";
+        }
 
         String name = (String) model.asMap().get("name");
 
@@ -51,6 +55,32 @@ public class TodoController {
     public String deleteTodo(@RequestParam int id, Model model) {
 
        todoService.deleteTodo(id);
+
+        return "redirect:/list-todos";
+    }
+
+    @GetMapping("/update-todo")
+    public String showUpdateTodo(@RequestParam int id, Model model) {
+
+        Todo todo = todoService.getTodoById(id);
+
+        model.addAttribute("todo", todo);
+
+        return "todo";
+    }
+
+    @PostMapping("/update-todo")
+    public String updateTodo( Model model, @Validated Todo todo, BindingResult result) {
+
+
+        todo.setUser((String) model.asMap().get("name"));
+
+        if(result.hasErrors()){
+            System.out.println("testing for errors");
+            return "todo";
+        }
+
+        todoService.updateTodo(todo);
 
         return "redirect:/list-todos";
     }
