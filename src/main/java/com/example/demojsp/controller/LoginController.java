@@ -1,6 +1,8 @@
 package com.example.demojsp.controller;
 
 
+import com.example.demojsp.service.LoginService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,17 +13,27 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class LoginController {
 
+    @Autowired
+    LoginService loginService;
 
     @GetMapping("/login")
-    public String  showLoginMessage(Model model){
+    public String showLoginMessage(Model model) {
 
         return "login";
     }
 
     @PostMapping("/login")
-    public String  showWelcomePage(@RequestParam String name, Model model){
+    public String showWelcomePage(@RequestParam String name,
+                                  @RequestParam String password,
+                                  Model model) {
+
+        boolean isValidUser = loginService.validateUser(name, password);
+
+        if (!isValidUser)
+            return "login";
 
         model.addAttribute("name", name);
+        model.addAttribute("password", password);
 
         return "welcome";
     }
