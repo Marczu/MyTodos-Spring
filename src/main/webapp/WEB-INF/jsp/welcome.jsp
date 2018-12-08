@@ -4,6 +4,8 @@
     <title>Welcome Page</title>
 </head>
 <body>
-Welcome ${name} and your password is ${password}
+Welcome ${name}. Have a nice Day!
+<br>
+<a href="/list-todos">Click here to manage your todos</a>
 </body>
 </html>

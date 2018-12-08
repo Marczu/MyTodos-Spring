@@ -5,7 +5,7 @@
     <title>tete</title>
 </head>
 <body>
-
+<font color="red">${message}</font>
 <form method="post">
     Name: <input type="text" name="name"/>
     <br>
