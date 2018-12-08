@@ -1,5 +1,6 @@
 package com.example.demojsp.controller;
 
+import com.example.demojsp.model.Todo;
 import com.example.demojsp.service.TodoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -31,19 +32,17 @@ public class TodoController {
     @GetMapping("/add-todo")
     public String showAddTodo(Model model) {
 
-        String name = (String) model.asMap().get("name");
-
-        model.addAttribute("todos", todoService.retrieveTodos(name));
+        model.addAttribute("todo", new Todo(0, (String) model.asMap().get("name") , "Default desc", new Date(), false ));
 
         return "todo";
     }
 
     @PostMapping("/add-todo")
-    public String addTodo(@RequestParam String desc, Model model) {
+    public String addTodo(Todo todo, Model model) {
 
         String name = (String) model.asMap().get("name");
 
-        todoService.addTodo(name, desc, new Date(), false);
+        todoService.addTodo(name, todo.getDesc(), new Date(), false);
 
         return "redirect:/list-todos";
     }
@@ -53,7 +52,7 @@ public class TodoController {
 
        todoService.deleteTodo(id);
 
-        return "redirect:list-todos";
+        return "redirect:/list-todos";
     }
 
 }
