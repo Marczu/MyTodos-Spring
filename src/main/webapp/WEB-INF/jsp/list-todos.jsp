@@ -15,35 +15,37 @@
           rel="stylesheet">
 </head>
 <body>
-<h1>Your Todos</h1>
+<div class="container">
+    <h1>Your Todos</h1>
 
-<table>
-    <thead>
+    <table class="table table-hover">
+        <thead class="thead-light">
         <tr>
-            <th>Description</th>
-            <th>Target Time</th>
-            <th>Is it done?</th>
+            <th scope="col">Description</th>
+            <th scope="col">Target Time</th>
+            <th scope="col">Is it done?</th>
+            <th scope="col">Delete</th>
         </tr>
-    </thead>
-    <tbody>
-    <c:forEach items="${todos}" var="todo">
-        <tr>
-            <td>${todo.desc}</td>
-            <td>${todo.targetDate}</td>
-            <td>${todo.done}</td>
-        </tr>
-    </c:forEach>
-    </tbody>
-</table>
-<br>
+        </thead>
+        <tbody>
+        <c:forEach items="${todos}" var="todo">
+            <tr>
+                <td>${todo.desc}</td>
+                <td>${todo.targetDate}</td>
+                <td>${todo.done}</td>
+                <td><a class="btn btn-warning btn-sm" href="delete-todo?id=${todo.id}" role="button">Delete</a></td>
+            </tr>
+        </c:forEach>
+        </tbody>
+    </table>
+
+    <div>
+        <a class="btn btn-outline-success btn-lg" href="/add-todo" role="button">Add Todo</a>
+    </div>
 
 
-<br>
-
-<a href="/add-todo">Add a Todo</a>
-
-
-<script src="webjars/jquery/3.0.0/jquery.min.js"></script>
-<script src="webjars/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+    <script src="webjars/jquery/3.0.0/jquery.min.js"></script>
+    <script src="webjars/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+</div>
 </body>
 </html>
