@@ -21,6 +21,10 @@ public class TodoController {
     @Autowired
     TodoService todoService;
 
+    private String getLoggedInUserName(Model model) {
+        return (String) model.asMap().get("name");
+    }
+
     @InitBinder
     public void initBinder(WebDataBinder binder){
         //Date - dd/MM/yyyy
@@ -32,7 +36,7 @@ public class TodoController {
     @GetMapping("/list-todos")
     public String showTodosList(Model model) {
 
-        String name = (String) model.asMap().get("name");
+        String name = getLoggedInUserName(model);
 
         model.addAttribute("todos", todoService.retrieveTodos(name));
 
@@ -42,7 +46,7 @@ public class TodoController {
     @GetMapping("/add-todo")
     public String showAddTodo(Model model) {
 
-        model.addAttribute("todo", new Todo(0, (String) model.asMap().get("name") , "Default desc", new Date(), false ));
+        model.addAttribute("todo", new Todo(0, getLoggedInUserName(model), "Default desc", new Date(), false ));
 
         return "todo";
     }
@@ -55,7 +59,7 @@ public class TodoController {
             return "todo";
         }
 
-        String name = (String) model.asMap().get("name");
+        String name = getLoggedInUserName(model);
 
         todoService.addTodo(name, todo.getDesc(), todo.getTargetDate(), false);
 
@@ -84,7 +88,7 @@ public class TodoController {
     public String updateTodo( Model model, @Validated Todo todo, BindingResult result) {
 
 
-        todo.setUser((String) model.asMap().get("name"));
+        todo.setUser(getLoggedInUserName(model));
 
         if(result.hasErrors()){
             System.out.println("testing for errors");
