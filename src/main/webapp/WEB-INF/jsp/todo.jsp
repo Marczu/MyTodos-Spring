@@ -1,16 +1,11 @@
+<%@ include file="common/header.jspf" %>
+<%@ include file="common/navigation.jspf" %>
 
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
-<html>
-<head>
-    <title>Add Todo</title>
-    <link href="webjars/bootstrap/4.1.3/css/bootstrap.min.css"
-          rel="stylesheet">
-</head>
-<body>
 <style>
 
-    .error{color: red}
+    .error {
+        color: red
+    }
 </style>
 
 <div class="container">
@@ -19,11 +14,24 @@
 
     <form:form method="post" modelAttribute="todo">
         <form:hidden path="id"/>
+
+        <%--Description--%>
         <fieldset class="form-group">
             <form:label path="desc">Description</form:label>
-            <small class="form-text text-muted" ><form:errors path="desc" cssClass="error"/></small>
+            <small class="form-text text-muted"><form:errors path="desc" cssClass="error"/></small>
 
-            <form:input type="text" class="form-control" path="desc" placeholder="Write description for new Todo" required="required"/>
+            <form:input type="text" class="form-control" path="desc" placeholder="Write description for new Todo"
+                        required="required"/>
+
+        </fieldset>
+
+        <%--Date--%>
+        <fieldset class="form-group">
+            <form:label path="targetDate">Target Date</form:label>
+            <small class="form-text text-muted"><form:errors path="targetDate" cssClass="error"/></small>
+
+            <form:input type="text" class="form-control" path="targetDate" placeholder="Write description for new Todo"
+                        required="required"/>
 
         </fieldset>
         <button type="submit" class="btn btn-success">Add new Todo</button>
@@ -31,9 +39,6 @@
 
 
 
-    <script src="webjars/jquery/3.0.0/jquery.min.js"></script>
-    <script src="webjars/bootstrap/4.1.3/js/bootstrap.min.js"></script>
-
 </div>
-</body>
-</html>
+<%@include file="common/footer.jspf" %>
+

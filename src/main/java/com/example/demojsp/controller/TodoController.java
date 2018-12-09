@@ -3,12 +3,15 @@ package com.example.demojsp.controller;
 import com.example.demojsp.model.Todo;
 import com.example.demojsp.service.TodoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Controller
@@ -17,6 +20,14 @@ public class TodoController {
 
     @Autowired
     TodoService todoService;
+
+    @InitBinder
+    public void initBinder(WebDataBinder binder){
+        //Date - dd/MM/yyyy
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        binder.registerCustomEditor(Date.class, new CustomDateEditor(
+                dateFormat, false));
+    }
 
     @GetMapping("/list-todos")
     public String showTodosList(Model model) {
@@ -46,7 +57,7 @@ public class TodoController {
 
         String name = (String) model.asMap().get("name");
 
-        todoService.addTodo(name, todo.getDesc(), new Date(), false);
+        todoService.addTodo(name, todo.getDesc(), todo.getTargetDate(), false);
 
         return "redirect:/list-todos";
     }
